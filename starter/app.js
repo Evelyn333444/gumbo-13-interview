@@ -20,7 +20,29 @@ async function fetchUserData(id) {
 
 // Put your code here
 // ------------------
-
+async function main () {
+  const userIds = await fetchFollowerIds();
+  const users = userIds.map(id => fetchUserData(id));
+  const userData = await Promise.all(users);
+  document.querySelector(".followers").innerHTML = userData.map(user => `
+    .map((user) => {
+      return userHtml(user);
+    })
+      .join("");
+  }
+    function userHtml(user) {
+    <div class="profile">
+      <img class="profile.avatar" src=${user.avatar}  />
+      <div class="profile__info">
+        <p class="profile__username">${user.username}</p>
+        <p class="profile__bio">${user.bio}</p>
+      </div>
+      <button class="profile__unfollow">Remove</button>
+    </div>
+      )
+  `).join("");
+  console.log(userData);
+}
 // ------------------
 
 // Fake data - do not access USERS directly in your solution
